@@ -1,8 +1,10 @@
-# agentic-trust
+# Agentic Trust Primitive
 
-`agentic-trust` is an evidence-first portable trust primitive for agents. It is designed to make trust claims reproducible across runtimes by hashing evidence, publishing proofs to IPFS, and anchoring attestations against ERC-8004 backed identity.
+`agentic-trust` is an evidence-first portable trust primitive for agents. It is designed to make trust claims reproducible across runtimes by hashing evidence, publishing proofs to local files or IPFS, and anchoring attestations against stable agent identity.
 
 This repository is the standalone primitive that Djimo's personal tooling can evolve independently, while the Coordination Games engine consumes it through an adapter.
+
+Use **Agentic Trust Primitive** for this TypeScript implementation. Use **Agentic Trust Protocol** for the broader future interoperability spec.
 
 ## Packages
 
@@ -21,6 +23,10 @@ packages/
 4. Add publisher implementations for noop, local file, and Lighthouse/IPFS.
 5. Wire the Coordination Games adapter to translate gameplay evidence into trust records.
 6. Add ERC-8004 anchoring, end-to-end examples, and release packaging.
+
+## Architecture Notes
+
+See [`docs/v1-architecture-and-integration.md`](./docs/v1-architecture-and-integration.md) for the current v1 findings, game-engine integration plan, AT Protocol notes, signature strategy, and visual system diagram.
 
 ## Development
 
