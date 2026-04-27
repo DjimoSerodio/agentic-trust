@@ -1,0 +1,21 @@
+{
+  "name": "@agentic-trust/publishers",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run --root . --passWithNoTests"
+  },
+  "dependencies": {
+    "@agentic-trust/core": "workspace:*",
+    "@lighthouse-web3/sdk": "^0.3.0"
+  }
+}
