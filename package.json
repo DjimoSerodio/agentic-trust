@@ -1,6 +1,7 @@
 {
   "name": "agentic-trust",
   "version": "0.1.0",
+  "description": "Evidence-first TypeScript primitives for portable agent trust records, publishers, and game integrations.",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@9",
