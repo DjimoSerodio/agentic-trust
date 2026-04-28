@@ -2,7 +2,7 @@
 
 `agentic-trust` is an evidence-first portable trust primitive for agents. It is designed to make trust claims reproducible across runtimes by hashing evidence, publishing proofs to local files or IPFS, and anchoring attestations against stable agent identity.
 
-This repository is the standalone primitive that Djimo's personal tooling can evolve independently, while the Coordination Games engine consumes it through an adapter.
+This repository is the standalone primitive tooling that can evolve independently, and can be consumed through adapters.
 
 Use **Agentic Trust Primitive** for this TypeScript implementation. Use **Agentic Trust Protocol** for the broader future interoperability spec.
 
