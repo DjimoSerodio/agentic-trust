@@ -21,12 +21,10 @@ packages/
 2. Add core trust types, canonical hashing, lexicon entries, and reducer contracts.
 3. Implement evidence bundles, serialization rules, and local validation utilities.
 4. Add publisher implementations for noop, local file, and Lighthouse/IPFS.
-5. Wire the Coordination Games adapter to translate gameplay evidence into trust records.
+5. Wire the adapters to translate evidence into trust records.
 6. Add ERC-8004 anchoring, end-to-end examples, and release packaging.
 
 ## Architecture Notes
-
-See [`docs/v1-architecture-and-integration.md`](./docs/v1-architecture-and-integration.md) for the current v1 findings, game-engine integration plan, AT Protocol notes, signature strategy, and visual system diagram.
 
 ## Development
 
