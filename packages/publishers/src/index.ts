@@ -113,6 +113,8 @@ export interface PublishEvidenceBundleResult {
   readonly mediaType: 'application/json';
   readonly cid?: string;
   readonly gatewayUrl?: string;
+  readonly gatewayStatus?: 'pending' | 'available' | 'failed';
+  readonly gatewayVerifiedAt?: string;
 }
 
 interface PreparedBundle {
@@ -170,6 +172,13 @@ export class LocalFilePublisher {
 
 export interface LighthousePublisherOptions extends PublisherValidationOptions {
   readonly apiKey: string;
+  /**
+   * When true, perform a best-effort GET against the returned gateway URL before
+   * reporting the result. Lighthouse can return a CID before public gateways are
+   * ready, so callers should treat the default status as pending.
+   */
+  readonly verifyGateway?: boolean;
+  readonly gatewayVerificationTimeoutMs?: number;
 }
 
 export class LighthousePublisher {
@@ -190,6 +199,11 @@ export class LighthousePublisher {
       uploadName,
     );
     const cid = readLighthouseCid(response.data);
+    const gatewayUrl = `https://gateway.lighthouse.storage/ipfs/${cid}`;
+    const gatewayVerification =
+      this.options.verifyGateway === true
+        ? await verifyGatewayUrl(gatewayUrl, this.options.gatewayVerificationTimeoutMs)
+        : { gatewayStatus: 'pending' as const };
 
     return {
       publisher: 'lighthouse',
@@ -199,7 +213,8 @@ export class LighthousePublisher {
       byteLength: prepared.byteLength,
       mediaType: 'application/json',
       cid,
-      gatewayUrl: `https://gateway.lighthouse.storage/ipfs/${cid}`,
+      gatewayUrl,
+      ...gatewayVerification,
     };
   }
 }
@@ -516,6 +531,35 @@ const prepareBundle = (
     digest,
     byteLength: Buffer.byteLength(canonicalJson, 'utf8'),
   };
+};
+
+const verifyGatewayUrl = async (
+  gatewayUrl: string,
+  timeoutMs = 10_000,
+): Promise<
+  | { readonly gatewayStatus: 'available'; readonly gatewayVerifiedAt: string }
+  | { readonly gatewayStatus: 'failed'; readonly gatewayVerifiedAt: string }
+> => {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(gatewayUrl, {
+      method: 'GET',
+      signal: controller.signal,
+    });
+    return {
+      gatewayStatus: response.ok ? 'available' : 'failed',
+      gatewayVerifiedAt: new Date().toISOString(),
+    };
+  } catch (error) {
+    void error;
+    return {
+      gatewayStatus: 'failed',
+      gatewayVerifiedAt: new Date().toISOString(),
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
 };
 
 const resolveBundle = (input: PublishEvidenceBundleInput): EvidenceBundleV1 => {

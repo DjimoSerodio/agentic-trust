@@ -128,6 +128,7 @@ describe('publishers', () => {
   });
 
   afterEach(async () => {
+    vi.unstubAllGlobals();
     if (tempDirectory !== undefined) {
       await rm(tempDirectory, { recursive: true, force: true });
       tempDirectory = undefined;
@@ -190,7 +191,35 @@ describe('publishers', () => {
     );
     expect(result.cid).toBe('bafylighthousecid');
     expect(result.gatewayUrl).toBe('https://gateway.lighthouse.storage/ipfs/bafylighthousecid');
+    expect(result.gatewayStatus).toBe('pending');
     expect(result.uri).toBe('ipfs://bafylighthousecid');
+  });
+
+  it('marks Lighthouse gateway status as available when verification succeeds', async () => {
+    uploadTextMock.mockResolvedValue({
+      data: { Hash: 'bafylighthousecid', Name: 'bundle.json', Size: '123' },
+    });
+    const fetchMock = vi.fn(() => Promise.resolve({ ok: true }));
+    vi.stubGlobal('fetch', fetchMock);
+    const bundle = createEvidenceBundleV1({
+      name: 'Remote Evidence',
+      createdAt,
+      envelopes: [evidenceEnvelope()],
+    });
+    const publisher = new LighthousePublisher({
+      apiKey: 'test-api-key',
+      registry: createPublisherTrustLexiconRegistry(),
+      verifyGateway: true,
+    });
+
+    const result = await publisher.publish({ bundle });
+
+    expect(fetchMock).toHaveBeenCalledWith(
+      'https://gateway.lighthouse.storage/ipfs/bafylighthousecid',
+      expect.objectContaining({ method: 'GET' }),
+    );
+    expect(result.gatewayStatus).toBe('available');
+    expect(result.gatewayVerifiedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
   });
 
   it('rejects Lighthouse upload responses without a CID', async () => {
