@@ -1,10 +1,19 @@
 {
-  "name": "agentic-trust",
+  "name": "@agentic-trust/trust",
   "version": "0.1.0",
   "description": "Evidence-first TypeScript primitives for portable agent trust records, publishers, and game integrations.",
-  "private": true,
+  "private": false,
   "type": "module",
   "packageManager": "pnpm@9",
+  "main": "./packages/core/dist/index.js",
+  "types": "./packages/core/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./packages/core/dist/index.d.ts",
+      "import": "./packages/core/dist/index.js"
+    }
+  },
+  "files": ["packages/core/dist"],
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
@@ -15,5 +24,12 @@
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^2.1.9"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.5.0",
+    "@noble/secp256k1": "^2.1.0",
+    "ethers": "^6.16.0",
+    "viem": "^2.21.0",
+    "zod": "^3.23.8"
   }
 }

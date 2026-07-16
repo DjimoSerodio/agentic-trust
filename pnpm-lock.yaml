@@ -7,6 +7,22 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@noble/hashes':
+        specifier: ^1.5.0
+        version: 1.8.0
+      '@noble/secp256k1':
+        specifier: ^2.1.0
+        version: 2.3.0
+      ethers:
+        specifier: ^6.16.0
+        version: 6.16.0
+      viem:
+        specifier: ^2.21.0
+        version: 2.48.4(typescript@5.9.3)(zod@3.25.76)
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.9.4
@@ -35,6 +51,9 @@ importers:
       '@noble/secp256k1':
         specifier: ^2.1.0
         version: 2.3.0
+      ethers:
+        specifier: ^6.16.0
+        version: 6.16.0
       viem:
         specifier: ^2.21.0
         version: 2.48.4(typescript@5.9.3)(zod@3.25.76)
