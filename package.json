@@ -18,7 +18,8 @@
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
-    "check": "biome check ."
+    "check": "biome check .",
+    "test:package-consumer": "node scripts/verify-package-consumer.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
