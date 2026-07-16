@@ -1,7 +1,7 @@
 import { getAddress, isAddress } from 'ethers';
 import { parseEasAttestation } from './eas-attestation-parse.js';
-import { createPromiseOutcomeAttestation, decodePromiseOutcomeEasData } from './promise-outcome.js';
 import { ZERO_ADDRESS, ZERO_BYTES32, } from './promise-outcome-types.js';
+import { createPromiseOutcomeAttestation, decodePromiseOutcomeEasData } from './promise-outcome.js';
 function isBytes32(value) {
     return typeof value === 'string' && /^0x[a-f0-9]{64}$/.test(value);
 }

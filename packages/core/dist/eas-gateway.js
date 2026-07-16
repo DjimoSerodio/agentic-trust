@@ -1,4 +1,4 @@
-import { getAddress, Interface, isAddress, keccak256, solidityPacked } from 'ethers';
+import { Interface, getAddress, isAddress, keccak256, solidityPacked } from 'ethers';
 export const EAS_CONTRACT_ABI = [
     'function attest((bytes32 schema,(address recipient,uint64 expirationTime,bool revocable,bytes32 refUID,bytes data,uint256 value) data) request) payable returns (bytes32)',
     'function getAttestation(bytes32 uid) view returns ((bytes32 uid,bytes32 schema,uint64 time,uint64 expirationTime,uint64 revocationTime,bytes32 refUID,address recipient,address attester,bool revocable,bytes data) attestation)',
