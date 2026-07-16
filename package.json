@@ -10,7 +10,8 @@
   "exports": {
     ".": {
       "types": "./packages/core/dist/index.d.ts",
-      "import": "./packages/core/dist/index.js"
+      "import": "./packages/core/dist/index.js",
+      "default": "./packages/core/dist/index.js"
     }
   },
   "files": ["packages/core/dist"],
